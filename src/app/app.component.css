@@ -1,0 +1,48 @@
+:root {
+  --main-bg-color: #008cba;
+  --main-text-color: white;
+  --stripe-color: #f2f2f2;
+  --hover-color: #dddddd;
+  --main-font: "Poppins", sans-serif;
+}
+
+body {
+  font-family: var(--main-font);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  margin: 20px 0;
+}
+
+table thead {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+table thead tr th {
+  padding: 10px;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: var(--stripe-color);
+}
+
+table tbody tr:hover {
+  background-color: var(--hover-color);
+}
+
+table tbody tr th,
+table tbody tr td {
+  padding: 10px;
+}
+
+img {
+  border-radius: 50%;
+}
