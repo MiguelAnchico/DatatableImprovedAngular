@@ -1,25 +1,61 @@
-:root {
+@font-face {
+  font-family: 'Inter Light';
+  font-weight: 300;
+  src: url('../assets/Inter-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Inter Medium';
+  font-weight: 500;
+  src: url('../assets/Inter-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Inter Bold';
+  font-weight: 700;
+  src: url('../assets/Inter-Bold.ttf');
+}
+
+::ng-deep :root {
   --main-bg-color: #008cba;
   --main-text-color: white;
   --stripe-color: #f2f2f2;
   --hover-color: #dddddd;
-  --main-font: "Poppins", sans-serif;
+  --main-font: 'Inter Bold', sans-serif;
+  --main-weight-font: 500;
+
+  --text-color:rgb(0,0,0, 0.6);
 }
 
-body {
-  font-family: var(--main-font);
+::ng-deep body {
+  font-family: 'Inter Medium', sans-serif;
+  color: var(--text-color);
+
+  padding: 32px;
+  margin: auto;
+}
+
+h1 {
+  color: rgb(0,0,0, 0.9);
+  text-align: center;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
   text-align: left;
-  margin: 20px 0;
+  display: block;
+  margin: auto;
+  padding: 16px 0;
+  overflow-x: auto;
+
+  min-height: 500px;
 }
 
 table thead {
   background-color: var(--main-bg-color);
   color: var(--main-text-color);
+
+  font-family: var(--main-font);
+  font-weight: 700;
 }
 
 table thead tr th {
@@ -28,6 +64,9 @@ table thead tr th {
 
 table tbody tr {
   border-bottom: 1px solid #dddddd;
+
+  font-family: 'Inter Light', sans-serif;
+  color: var(--text-color);
 }
 
 table tbody tr:nth-child(even) {

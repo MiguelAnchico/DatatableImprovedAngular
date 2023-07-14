@@ -1,24 +1,32 @@
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre de la bebida</th>
-      <th scope="col">Categoria</th>
-      <th scope="col">Instrucciones</th>
-      <th scope="col">Miniatura</th>
-      <th scope="col">Ingredientes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let cocktail of cocktails">
-      <th>{{cocktail?.idDrink}}</th>
-      <th>{{cocktail?.strDrink}}</th>
-      <th>{{cocktail?.strCategory}}</th>
-      <th>{{cocktail?.strInstructions}}</th>
-      <th><img [src]="cocktail?.strDrinkThumb" width="100" height="100"></th>
-      <th>
-        {{concatIngredients(cocktail)}}
-      </th>
-    </tr>
-  </tbody>
-</table>
+<h1>List of Drinks</h1>
+<app-filtertable (addFilter)="changeFiltersValue($event.event, $event.attribute)" (deleteFilters)="deleteFilters()"></app-filtertable>
+<div>
+  <table style="width: 100%;"datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Type</th>
+        <th scope="col">Ingredients</th>
+        <th scope="col">Instructions</th>
+        <th scope="col">Preview</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cocktail of cocktails">
+        <th>{{cocktail?.idDrink}}</th>
+        <th>{{cocktail?.strDrink}}</th>
+        <th>{{cocktail?.strCategory}}</th>
+        <th>
+          {{concatIngredients(cocktail)}}
+        </th>
+        <th>{{cocktail?.strInstructions}}</th>
+        <th><img [src]="cocktail?.strDrinkThumb" width="100" height="100"></th>
+      </tr>
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
+</div>
+
+

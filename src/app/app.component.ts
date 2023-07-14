@@ -1,21 +1,32 @@
-import { Component, inject, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ViewChild } from '@angular/core';
 
 import { Cocktail } from './models/cocktails.model';
 import { Subject } from 'rxjs';
 
-import {map, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { DrinksService } from './shared/services/drinks.service';
+import { DataTableDirective } from 'angular-datatables';
 
 type IngredientKeys = 'strIngredient1' | 'strIngredient2' | 'strIngredient3' | 'strIngredient4' | 'strIngredient5' | 'strIngredient6' | 'strIngredient7' | 'strIngredient8' | 'strIngredient9' | 'strIngredient10' | 'strIngredient11' | 'strIngredient12' | 'strIngredient13' | 'strIngredient14' | 'strIngredient15';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement!: DataTableDirective;
+
   cocktails: Cocktail[] = [];
+  allCocktails: Cocktail[] = [];
+  filters: any = {
+    idDrink: '',
+    strCategory: '',
+    ingredients: '',
+    strInstructions: '',
+  };
+
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   private onDestroy = new Subject<void>();
@@ -34,6 +45,7 @@ export class AppComponent {
       .pipe(takeUntil(this.onDestroy))
       .subscribe((data: Cocktail[]) => {
         this.cocktails = data;
+        this.allCocktails = data;
         this.dtTrigger.next(data);
       }, (error: any) => {
         console.log(error);
@@ -58,5 +70,43 @@ export class AppComponent {
     this.dtTrigger.unsubscribe();
     this.onDestroy.next();
     this.onDestroy.complete();
+  }
+
+  changeFiltersValue(event: Event, attribute: string) : void {
+    const element = event.currentTarget as HTMLInputElement
+    const value = element.value;
+
+    this.filters[attribute] = value;
+    this.filterDrinksByAttribute();
+  }
+
+  filterDrinksByAttribute() {
+    let CocktailsFilter: Cocktail[] = this.allCocktails;
+
+    for (const key in this.filters) {
+        CocktailsFilter =  CocktailsFilter.filter((cocktail: any) => this.filters[key] === '' ||
+        cocktail[key].toLowerCase().includes(this.filters[key].toLowerCase()));
+    }
+
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      if(this.cocktails.length != 0 || CocktailsFilter.length > 0) {
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.cocktails = CocktailsFilter;
+        this.dtTrigger.next(CocktailsFilter);
+      }
+    });
+  }
+
+  deleteFilters() : void {
+    this.filters = {
+      idDrink: '',
+      strCategory: '',
+      ingredients: '',
+      strInstructions: '',
+    };
+
+    this.filterDrinksByAttribute();
   }
 }

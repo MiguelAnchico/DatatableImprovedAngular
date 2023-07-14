@@ -1,0 +1,25 @@
+<div class="list-first-filters">
+  <div class="filters">
+    <label for="search-id">Id</label>
+    <input #searchId type="text" (keyup)="filterDrinks($event, 'idDrink')" placeholder="Search id" name="search-id"/>
+  </div>
+  <div class="filters">
+    <label for="search-title">Title</label>
+    <input #searchTitle type="text" (keyup)="filterDrinks($event, 'strDrink')" placeholder="Search title" name="search-title"/>
+  </div>
+  <div class="filters">
+    <label for="search-type">Type</label>
+    <input #searchType type="text" (keyup)="filterDrinks($event, 'strCategory')" placeholder="Search type" name="search-type"/>
+  </div>
+  <div *ngIf="isMoreFilters" class="filters">
+    <label for="search-instructions">Instructions</label>
+    <input #searchInstructions type="text" (keyup)="filterDrinks($event, 'strInstructions')" placeholder="Search instructions" name="search-first-instructions"/>
+  </div>
+
+  <button *ngIf="!isMoreFilters" class="filtertable-show-button" (click)="changeFilterVisibility(true)">Show more filters</button>
+  <button *ngIf="isMoreFilters" class="filtertable-hidden-button" (click)="changeFilterVisibility(false)">Hidden filters</button>
+</div>
+<div class="filtertable-delete-button" (click)="deleteAllFilters()">
+  <button >Delete all filters</button>
+</div>
+
